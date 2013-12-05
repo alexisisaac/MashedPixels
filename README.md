@@ -2,6 +2,7 @@ MashedPixels
 ============
 
 An Arduino based Christmas light
+*[demo](https://www.youtube.com/watch?v=gfSNxLwvbII)*
 
 # Configuration
 At the beginning of the file there are switches to choose which effects will be available.
@@ -53,7 +54,6 @@ The pin where the button is connected.
 Setup the number of leds in the strip
 
 Configure the type of strip (in the setup function line 133)
-
 	// Uncomment one of the following lines for your leds arrangement.
 	// FastLED.addLeds<TM1803, DATA_PIN, RGB>(leds, NUM_LEDS);
 	// FastLED.addLeds<TM1804, DATA_PIN, RGB>(leds, NUM_LEDS);
