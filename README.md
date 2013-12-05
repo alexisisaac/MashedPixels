@@ -3,7 +3,9 @@ MashedPixels
 
 An Arduino based Christmas light
 
-*[demo](https://www.youtube.com/watch?v=gfSNxLwvbII)*
+* *[breadboard demo](https://www.youtube.com/watch?v=gfSNxLwvbII)*
+* *[strip demo](https://www.youtube.com/watch?v=dMHQV0NTcpk)*
+
 
 # Configuration
 At the beginning of the file there are switches to choose which effects will be available.
