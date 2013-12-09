@@ -5,6 +5,7 @@ An Arduino based Christmas light
 
 * *[breadboard demo](https://www.youtube.com/watch?v=gfSNxLwvbII)*
 * *[strip demo](https://www.youtube.com/watch?v=dMHQV0NTcpk)*
+* *[Christmas tree demo](https://www.youtube.com/watch?v=ITD6IiKeDy0)*
 
 
 # Configuration
