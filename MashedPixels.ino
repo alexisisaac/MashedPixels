@@ -5,7 +5,7 @@
 #define USE_MATHIEUMODE
 #define USE_EIFFELMODE
 #define USE_ANTSMODE
-#define USE_CALIBRATEMODE
+//#define USE_CALIBRATEMODE
 #define USE_TRADITIONALMODE
 #define USE_REDWAVEMODE
 //#define USE_VIDEOMODE
@@ -16,7 +16,7 @@
 #define BUTTON_PIN 3
 #define NUM_LEDS 100
 
-
+#define USE_RESET_AS_BUTTON
 #define SERIAL_DEBUG
 
 
@@ -134,11 +134,11 @@ void setup(){
   // FastLED.addLeds<TM1803, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<TM1804, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<TM1809, DATA_PIN, RGB>(leds, NUM_LEDS);
-   FastLED.addLeds<NEOPIXEL, DATA_PIN, RGB>(leds, NUM_LEDS);
+  //FastLED.addLeds<NEOPIXEL, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<WS2812B, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<UCS1903, DATA_PIN, RGB>(leds, NUM_LEDS);
-  //** FastLED.addLeds<WS2811, DATA_PIN, GRB>(leds, NUM_LEDS);
+   FastLED.addLeds<WS2811, DATA_PIN, GRB>(leds, NUM_LEDS);
   // FastLED.addLeds<WS2801, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<SM16716, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<LPD8806, RGB>(leds, NUM_LEDS);
@@ -148,9 +148,9 @@ void setup(){
   // FastLED.addLeds<LPD8806, DATA_PIN, CLOCK_PIN, RGB>(leds, NUM_LEDS);
 
   // delay(1000);
-
+#ifndef USE_RESET_AS_BUTTON
   pinMode(BUTTON_PIN,INPUT);
-
+#endif
 #ifdef USE_MATHIEUMODE
   Serial.println("Init mat");
   MAX_MODE++;
@@ -185,9 +185,18 @@ void setup(){
   MAX_MODE++;
 #endif
 mode = (mode_display)EEPROM.read(0);
+#ifdef USE_RESET_AS_BUTTON
+mode = (mode_display)((int)mode+1);
+
 if (mode>=MAX_MODE){
   mode = (mode_display)0;
 }
+EEPROM.write(0, mode);
+#endif
+if (mode>=MAX_MODE){
+  mode = (mode_display)0;
+}
+#ifndef USE_RESET_AS_BUTTON  
   Serial.println("Light test");
 
   for(int whiteLed = 0; whiteLed < NUM_LEDS; whiteLed = whiteLed + 1) {
@@ -241,7 +250,7 @@ if (mode>=MAX_MODE){
   FastLED.show();
   delay(300);
   Serial.println("Light test ok");
-
+#endif
 #ifdef USE_VIDEOMODE   
   Serial.println("init SD");
   initMenu();
@@ -251,6 +260,7 @@ if (mode>=MAX_MODE){
 }
 
 void loop(){
+#ifndef USE_RESET_AS_BUTTON
   if ( digitalRead(BUTTON_PIN) == LOW) {
     Serial.print(MAX_MODE);
     Serial.print(" ");
@@ -327,6 +337,7 @@ void loop(){
       }
   }
     }
+#endif
   switch(mode){
 #ifdef USE_MATHIEUMODE
   case MODE_DISPLAY_MATHIEU:
