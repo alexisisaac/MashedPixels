@@ -72,13 +72,13 @@ void IceCrystalsMode::loop(CRGB *leds){
           ledr = &leds[r];
           ledr->g = 0;
           ledr->r = 0;
-          ledr->b = 20;
+          ledr->b = 10;
         }
         if(l>=0 && l<count){
           ledl = &leds[l];
           ledl->g = 0;
           ledl->r = 0;
-          ledl->b = 20;
+          ledl->b = 10;
         }
         if (millis()>ice[a].explodingDuration){
           ice[a].state = ICE_SLEEPING;
