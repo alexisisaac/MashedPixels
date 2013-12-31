@@ -3,14 +3,12 @@ MashedPixels
 
 An Arduino based Christmas light
 
-<<<<<<< HEAD
-*[demo](https://www.youtube.com/watch?v=gfSNxLwvbII)*
-=======
-* *[breadboard demo](https://www.youtube.com/watch?v=gfSNxLwvbII)*
-* *[strip demo](https://www.youtube.com/watch?v=dMHQV0NTcpk)*
-* *[Christmas tree demo](https://www.youtube.com/watch?v=ITD6IiKeDy0)*
 
->>>>>>> 7af52d46ba9a9828402fd85a661a89e4c05211b8
+* [demo](https://www.youtube.com/watch?v=gfSNxLwvbII)
+* [breadboard demo](https://www.youtube.com/watch?v=gfSNxLwvbII)
+* [strip demo](https://www.youtube.com/watch?v=dMHQV0NTcpk)
+* [Christmas tree demo](https://www.youtube.com/watch?v=ITD6IiKeDy0)
+
 
 # Configuration
 At the beginning of the file there are switches to choose which effects will be available.
@@ -23,6 +21,7 @@ Add // before the effect you do not want to be compiled
 	#define USE_CALIBRATEMODE
 	#define USE_TRADITIONALMODE
 	#define USE_REDWAVEMODE
+	#define USE_ICECRYSTALSMODE
 	//#define USE_VIDEOMODE
 
 ## Description of the effects
@@ -47,6 +46,9 @@ A red wave is progressing along the led strip and the brighter leds randomnly fl
 
 ### VIDEOMODE
 NOT READY YET. DO NOT USE.
+
+### ICECRYSTALSMODE
+Blue light grows (become lighter) at a point then flickers for some time then explodes. 
 
 ## Pins configuration
 
