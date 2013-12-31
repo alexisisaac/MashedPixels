@@ -23,7 +23,7 @@ void IceCrystalsMode::initializeIce(int  a){
   ice[a].flickeringDuration = ice[a].growingSpeed+random(2000,5000);
   ice[a].explodingDuration = ice[a].flickeringDuration+random(600,1800);
   ice[a].explodingSpeed = random(10,1000)/1000000.0f;
-  ice[a].wakeupTime = ice[a].flickeringDuration+ice[a].explodingDuration+random(200,400);
+  ice[a].wakeupTime = ice[a].explodingDuration+random(200,400);
   ice[a].state = ICE_GROWING;
   ice[a].start = millis();
 }
@@ -61,9 +61,9 @@ void IceCrystalsMode::loop(CRGB *leds){
         break;
       case ICE_EXPLODING: 
         
-        led->b = 100-((millis()-ice[a].flickeringDuration)*100)/(ice[a].explodingDuration/4-ice[a].flickeringDuration);
-        led->r = 100-((millis()-ice[a].flickeringDuration)*100)/(ice[a].explodingDuration/4-ice[a].flickeringDuration);
-        led->g = 100-((millis()-ice[a].flickeringDuration)*100)/(ice[a].explodingDuration/4-ice[a].flickeringDuration);
+        //led->b = 100-((millis()-ice[a].flickeringDuration)*100)/(ice[a].explodingDuration/10-ice[a].flickeringDuration);
+        //led->r = 100-((millis()-ice[a].flickeringDuration)*100)/(ice[a].explodingDuration/10-ice[a].flickeringDuration);
+        //led->g = 100-((millis()-ice[a].flickeringDuration)*100)/(ice[a].explodingDuration/10-ice[a].flickeringDuration);
         npr = ice[a].position+(ice[a].explodingSpeed*(millis()-ice[a].flickeringDuration));
         npl = ice[a].position-(ice[a].explodingSpeed*(millis()-ice[a].flickeringDuration));
         r = round(npr*count);

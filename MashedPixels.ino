@@ -2,13 +2,14 @@
 #include <Wire.h>
 #include <EEPROM.h>
 
-#define USE_MATHIEUMODE
-#define USE_EIFFELMODE
-#define USE_ANTSMODE
+//#define USE_MATHIEUMODE
+//#define USE_EIFFELMODE
+//#define USE_ANTSMODE
 //#define USE_CALIBRATEMODE
-#define USE_TRADITIONALMODE
-#define USE_REDWAVEMODE
+//#define USE_TRADITIONALMODE
+//#define USE_REDWAVEMODE
 //#define USE_VIDEOMODE
+#define USE_ICECRYSTALSMODE
 
 
 //Customize here
@@ -41,6 +42,9 @@
 #endif
 #ifdef USE_REDWAVEMODE
 #include "RedWaveMode.h"
+#endif
+#ifdef USE_ICECRYSTALSMODE
+#include "IceCrystalsMode.h"
 #endif
 
 
@@ -79,6 +83,9 @@ enum mode_display {
 #endif
 #ifdef USE_VIDEOMODE
   MODE_DISPLAY_VIDEO,
+#endif
+#ifdef USE_ICECRYSTALSMODE
+  MODE_DISPLAY_ICECRYSTALS,
 #endif
 };
 
@@ -120,6 +127,9 @@ TraditionalMode trad = TraditionalMode( NUM_LEDS);
 #ifdef USE_REDWAVEMODE
 RedWaveMode rw = RedWaveMode(NUM_LEDS);
 #endif
+#ifdef USE_ICECRYSTALSMODE
+IceCrystalsMode ice = IceCrystalsMode(NUM_LEDS);
+#endif
 
 enum mode_display mode;
 boolean file_initialized = false;
@@ -134,11 +144,11 @@ void setup(){
   // FastLED.addLeds<TM1803, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<TM1804, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<TM1809, DATA_PIN, RGB>(leds, NUM_LEDS);
-  //FastLED.addLeds<NEOPIXEL, DATA_PIN, RGB>(leds, NUM_LEDS);
+  FastLED.addLeds<NEOPIXEL, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<WS2812B, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<UCS1903, DATA_PIN, RGB>(leds, NUM_LEDS);
-   FastLED.addLeds<WS2811, DATA_PIN, GRB>(leds, NUM_LEDS);
+  // FastLED.addLeds<WS2811, DATA_PIN, GRB>(leds, NUM_LEDS);
   // FastLED.addLeds<WS2801, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<SM16716, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<LPD8806, RGB>(leds, NUM_LEDS);
@@ -180,6 +190,11 @@ void setup(){
   Serial.println("Init rw");
   MAX_MODE++;
   rw.init();
+#endif
+#ifdef USE_ICECRYSTALSMODE
+  Serial.println("Init ice");
+  MAX_MODE++;
+  ice.init();
 #endif
 #ifdef USE_VIDEOMODE
   MAX_MODE++;
@@ -306,6 +321,11 @@ void loop(){
       initDisplayVideo();
       break;
 #endif
+#ifdef USE_ICECRYSTALSMODE
+    case MODE_DISPLAY_ICECRYSTALS:
+      ice.init();
+      break;
+#endif
     }
 
     delay(1000);
@@ -378,6 +398,12 @@ void loop(){
 #ifdef USE_VIDEOMODE
   case MODE_DISPLAY_VIDEO:
     if(file_initialized) loopDisplayVideo();
+    break;
+#endif
+#ifdef USE_ICECRYSTALSMODE
+  case MODE_DISPLAY_ICECRYSTALS:
+    ice.loop(leds);
+    FastLED.show();
     break;
 #endif
   }

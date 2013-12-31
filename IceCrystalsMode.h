@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "FastSPI_LED2.h"
 
-#define ICE_COUNT 20                                                                                                                                                                                                                                                                                                                                                                                        
+#define ICE_COUNT 10                                                                                                                                                                                                                                                                                                                                                                                       
 
 enum ice_state {
   ICE_GROWING,
