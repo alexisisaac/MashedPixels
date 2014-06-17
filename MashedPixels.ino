@@ -1,23 +1,29 @@
 #include "FastSPI_LED2.h"
 #include <Wire.h>
+#include "ProMiniUpdate.h"
+
 #include <EEPROM.h>
 
-//#define USE_MATHIEUMODE
-//#define USE_EIFFELMODE
-//#define USE_ANTSMODE
+
+#define VERSION 1
+#define APPLICATION "net.alexisisaac.arduino.pmu.mashedpixels"
+
+#define USE_MATHIEUMODE
+#define USE_EIFFELMODE
+#define USE_ANTSMODE
 //#define USE_CALIBRATEMODE
-//#define USE_TRADITIONALMODE
-//#define USE_REDWAVEMODE
+#define USE_TRADITIONALMODE
+#define USE_REDWAVEMODE
 //#define USE_VIDEOMODE
 #define USE_ICECRYSTALSMODE
 
 
 //Customize here
-#define DATA_PIN 2  
-#define BUTTON_PIN 3
+#define DATA_PIN 10  
+#define BUTTON_PIN 2
 #define NUM_LEDS 100
 
-#define USE_RESET_AS_BUTTON
+//#define USE_RESET_AS_BUTTON
 #define SERIAL_DEBUG
 
 
@@ -61,6 +67,8 @@
 byte *data;
 //char files[13][13];
 
+ProMiniUpdate pmu(VERSION, APPLICATION,A3,2,1);
+
 //Menu modes
 enum mode_display {
 #ifdef USE_MATHIEUMODE
@@ -100,6 +108,7 @@ SdFat sd;
 SdFile file;
 char videofile[13];
 
+
 //#define error(s) sd.errorHalt_P(PSTR(s))
 #define error(s) void(s)
 #endif
@@ -136,6 +145,8 @@ boolean file_initialized = false;
 
 
 void setup(){
+  
+  pmu.setup();
   delay(500);
   Serial.begin(9600);
   data = (byte *)malloc(DATA_SIZE);
@@ -144,11 +155,11 @@ void setup(){
   // FastLED.addLeds<TM1803, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<TM1804, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<TM1809, DATA_PIN, RGB>(leds, NUM_LEDS);
-  FastLED.addLeds<NEOPIXEL, DATA_PIN, RGB>(leds, NUM_LEDS);
+  // FastLED.addLeds<NEOPIXEL, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<WS2812B, DATA_PIN, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<UCS1903, DATA_PIN, RGB>(leds, NUM_LEDS);
-  // FastLED.addLeds<WS2811, DATA_PIN, GRB>(leds, NUM_LEDS);
+   FastLED.addLeds<WS2811, DATA_PIN, GRB>(leds, NUM_LEDS);
   // FastLED.addLeds<WS2801, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<SM16716, RGB>(leds, NUM_LEDS);
   // FastLED.addLeds<LPD8806, RGB>(leds, NUM_LEDS);
@@ -159,7 +170,7 @@ void setup(){
 
   // delay(1000);
 #ifndef USE_RESET_AS_BUTTON
-  pinMode(BUTTON_PIN,INPUT);
+  pinMode(BUTTON_PIN,INPUT_PULLUP);
 #endif
 #ifdef USE_MATHIEUMODE
   Serial.println("Init mat");
@@ -275,6 +286,8 @@ if (mode>=MAX_MODE){
 }
 
 void loop(){
+
+  pmu.loop();
 #ifndef USE_RESET_AS_BUTTON
   if ( digitalRead(BUTTON_PIN) == LOW) {
     Serial.print(MAX_MODE);
