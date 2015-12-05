@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "FastSPI_LED2.h"
+#include <FastLED.h>
 
 #define ICE_COUNT 10                                                                                                                                                                                                                                                                                                                                                                                       
 
