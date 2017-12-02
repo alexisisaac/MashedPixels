@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "FastSPI_LED2.h"
+#include "FastLED.h"
 
 #define ANTS_COUNT 8
 struct ant_data{
